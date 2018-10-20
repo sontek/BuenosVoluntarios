@@ -5,6 +5,7 @@
     "run:upgrade": "cd App && react-native-git-upgrade"
   },
   "dependencies": {
+    "react-native": "^0.57.3",
     "react-native-cli": "^2.0.1"
   }
 }
