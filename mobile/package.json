@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "run:ios": "cd App && react-native run-ios",
+    "run:droid": "cd App && react-native run-android",
+    "run:upgrade": "cd App && react-native-git-upgrade"
+  },
+  "dependencies": {
+    "react-native-cli": "^2.0.1"
+  }
+}
