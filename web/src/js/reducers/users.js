@@ -30,6 +30,7 @@ const user = (state = initialState, action) => {
                 user: {
                     ...state.user,
                     ...action.payload.user,
+                    interests: action.payload.user.interests || {},
                     isAuthenticated: true,
                     isFetching: false,
                     errors: [],

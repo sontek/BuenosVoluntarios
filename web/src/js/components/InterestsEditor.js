@@ -27,30 +27,28 @@ const cardStyle = {
 };
 
 class InterestsEditor extends React.Component {
-    state = {
-        children: false,
-        seniors: false,
-        animals: false,
-        emergency: false,
-        homelessness: false,
-        medical: false,
-        women: false,
-        veterans: false,
-        environment: false,
-        labor: false,
-        technology: false,
-        funding: false,
-        legal: false,
-        creative: false,
-        teaching: false
-    };
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: props.user,
+        };
+    }
     handleChange = name => event => {
-        this.setState({ [name]: event.target.checked }) ;   
+        const interests = {
+            ...this.state.user.interests,
+        };
+        interests[name] = event.target.checked;
+
+        this.setState({
+            user: {
+                ...this.state.user,
+                interests: interests
+            }
+        });
     };
 
     renderSwitch(k, i) {
-        let checked = this.state[k];
+        let checked = this.state.user.interests[k] || false;
         return (
             <Grid item key={i}>
                 <FormControlLabel
@@ -68,7 +66,7 @@ class InterestsEditor extends React.Component {
     };
 
     onSubmit = () => {
-        this.props.onSaveInterests(this.user.id, {...this.state}).then((result) => {
+        this.props.onSaveInterests(this.state.user).then((result) => {
             if (result.data.success) {
                 console.log("==== USER UPDATES SUCCESS");
             }
