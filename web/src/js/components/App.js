@@ -20,10 +20,12 @@ import Login from './Login';
 import Home from './Home';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import InterestsEditor from './InterestsEditor';
 
 class App extends Component {
   render() {
       return (
+          <Fragment>
               <CssBaseline />
           <div className="App">
             <TopNav />
@@ -31,9 +33,11 @@ class App extends Component {
               <PrivateRoute path="/dashboard" component={Dashboard} user={this.props.user} />
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
-              <Route path="/" component={Home}/>
+              <Route exact path="/" component={Home}/>
+              <Route path="/interests" component={InterestsEditor}/>
             </Switch>
-          </div>
+              </div>
+              </Fragment>
     );
   }
 }
