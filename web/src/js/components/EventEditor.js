@@ -20,120 +20,142 @@ import connect from "react-redux/es/connect/connect";
 //import {updateInterests} from "../actions/events";
 
 import Interests from './Interests';
+import {addEvent} from "../actions/events";
 
 
 class EventEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            description: '',
-            date: '',
-            children: false,
-            seniors: false,
-            animals: false,
-            emergency: false,
-            homelessness: false,
-            medical: false,
-            women: false,
-            veterans: false,
-            environment: false,
-            labor: false,
-            technology: false,
-            funding: false,
-            creative: false,
-            teaching: false,
-            legal: false
-
+            event: {
+                name: '',
+                description: '',
+                date: '',
+                owner: props.user.id,
+                interests: {
+                    children: false,
+                    seniors: false,
+                    animals: false,
+                    emergency: false,
+                    homelessness: false,
+                    medical: false,
+                    women: false,
+                    veterans: false,
+                    environment: false,
+                    labor: false,
+                    technology: false,
+                    funding: false,
+                    creative: false,
+                    teaching: false,
+                    legal: false
+                }
+            }
         }
     }
-    handleChange = name => e => {
-        this.setState({[e.target.name]: e.target.value })
-    }
-    renderSwitch = (k, i) => {
-        let checked = this.state[k] || false;
-        return (
-                <Grid item key={i}>
-                <FormControlLabel
-            control={
-                    <Switch
-                checked={checked}
-                onChange={this.handleChange(k)}
-                value={k}
-                    />
-                                        
+
+    handleChangeInterest = name => event => {
+        const interests = {
+            ...this.state.event.interests,
+        };
+        interests[name] = event.target.checked;
+
+        this.setState({
+            event: {
+                ...this.state.event,
+                interests: interests
             }
-            label={k.toUpperCase()}
+        });
+    };
+
+    renderSwitch = (k, i) => {
+        let checked = this.state.event.interests[k] || false;
+
+        return (
+            <Grid item key={i}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={checked}
+                            onChange={this.handleChangeInterest(k)}
+                            value={k}
+                        />
+                    }
+                    label={k.toUpperCase()}
                 />
-                </Grid>
-        )
+            </Grid>
+        );
             
     };
+
+    onSubmit = () => {
+        this.props.onSaveEvent(this.state.event).then((result) => {
+            if (result.data.success) {
+                console.log("==== EVENT UPDATES SUCCESS");
+            }
+            else {
+                console.log("FAILED TO SAVE EVENT");
+                this.setState({
+                    errors: [
+                        "Failed to save event"
+                    ]
+                });
+            }
+        });
+    };
+
     render() {
         const {classes} = this.props;
         return (
                 <Fragment>
-                <ValidatorForm onSubmit={this.onSubmit}>
-                <div>
-                <TextValidator
-            name={"name"}
-            label={"Event Name"}
-            onChange={this.handleChange}
-            value={this.state.name}
-            validators={["required"]}
-            errorMessages={[requiredMessage]}
-            margin="normal"
-                />
-                </div>
-                <div>
-                <TextValidator
-            name={"date"}
-            label={"Event Date"}
-            onChange={this.handleChange}
-            value={this.state.date}
-            validators={["required"]}
-            errorMessages={[requiredMessage]}
-            margin="normal"
-                />
-                </div>               <div>
-                <TextValidator
-            name={"description"}
-            label={"Short Description"}
-            onChange={this.handleChange}
-            value={this.state.name}
-            validators={[]}
-            errorMessages={[]}
-            margin="normal"
-                />
-                </div>
-                <h2>Wanted Skills and Interests</h2>
-                <Interests renderSwitch={this.renderSwitch} />
-                </ValidatorForm>
+                    <ValidatorForm onSubmit={this.onSubmit}>
+                        <div>
+                            <TextValidator
+                                name={"name"}
+                                label={"Event Name"}
+                                onChange={this.handleChangeEvent}
+                                value={this.state.name}
+                                validators={["required"]}
+                                errorMessages={[requiredMessage]}
+                                margin="normal"
+                            />
+                        </div>
+                        <div>
+                            <TextValidator
+                                name={"date"}
+                                label={"Event Date"}
+                                onChange={this.handleChangeEvent}
+                                value={this.state.date}
+                                validators={["required"]}
+                                errorMessages={[requiredMessage]}
+                                margin="normal"
+                            />
+                        </div>
+                        <h2>Wanted Skills and Interests</h2>
+                        <Interests renderSwitch={this.renderSwitch} />
+                    </ValidatorForm>
+                    <Button type="submit" variant="contained" color="primary" onClick={this.onSubmit}>
+                        Save
+                    </Button>
                 </Fragment>
         )
     }
 }
-/*
+
 const EventsContainer = connect(
     (state, ownProps) => {
         return {
-            event: state.events.event
-                    
+            user: state.users.user
         };
             
     },
     (dispatch, ownProps) => {
         return {
-            onSaveInterests: (event_id, interests) => {
-                return dispatch(updateInterests(event_id, interests));
-                            
+            onSaveEvent: (event) => {
+                return dispatch(addEvent(event));
             },
-                    
         }
             
     },
 )(EventEditor);
 
 export default withRouter(EventsContainer);
-*/
-export default EventEditor;
