@@ -5,7 +5,8 @@ import App from './js/components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Router } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
+import cyan from '@material-ui/core/colors/cyan';
+import green from '@material-ui/core/colors/green';
 import {configureStore} from './js/redux_utils';
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
@@ -16,7 +17,8 @@ const store = configureStore(history);
 
 const theme = createMuiTheme({
     palette: {
-        primary: blue,
+        primary: {main: '#8e24aa'},
+        secondary: {main: '#fdca0b'},
     },
 });
 
