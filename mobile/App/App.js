@@ -12,7 +12,6 @@ import { Navigator, NativeModules } from 'react-native';
 
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
 import FBLoginButton from './fb_button';
-
 // you can set your style right here, it'll be propagated to application
 const uiTheme = {
     palette: {

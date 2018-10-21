@@ -27,40 +27,40 @@ class App extends Component {
       return (
           <Fragment>
               <CssBaseline />
-          <div className="App">
-            <TopNav />
-            <Switch>
-              <PrivateRoute path="/dashboard" component={Dashboard} user={this.props.user} />
-              <Route path="/login" component={Login}/>
-              <Route path="/register" component={Register}/>
-              <Route exact path="/" component={Home}/>
-              <Route path="/interests" component={InterestsEditor}/>
-            </Switch>
+              <div className="App">
+                <TopNav user={this.props.user} />
+                <Switch>
+                  <PrivateRoute path="/dashboard" component={Dashboard} user={this.props.user} />
+                  <Route path="/login" component={Login}/>
+                  <Route path="/register" component={Register}/>
+                  <Route exact path="/" component={Home}/>
+                  <Route path="/interests" component={InterestsEditor}/>
+                </Switch>
               </div>
-              </Fragment>
+          </Fragment>
     );
   }
 }
 
 const TopNav = (user) => (
-      <AppBar position="static">
-      <Toolbar>
-      <IconButton color="inherit" aria-label="Menu">
-      <MenuIcon />
-      </IconButton>
-      <Typography variant="title" color="inherit">
-    Brigaid
-</Typography>
-        <div className="flex" />
-        {!user ? <IconButton><AccountCircle /></IconButton> : (
-            <Fragment>
-    <Button color="inherit" component={Link} to={"/login"}>Login</Button>
-                <Button color="inherit" component={Link} to={"/register"}>Register</Button>
-</Fragment>
-        )}
-    </Toolbar>
-        </AppBar>
-)
+    <AppBar position="static">
+        <Toolbar>
+            <IconButton color="inherit" aria-label="Menu">
+                <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit">
+                Brigaid
+            </Typography>
+            <div className="flex" />
+            {user.is_authenticated ? <IconButton><AccountCircle /></IconButton> : (
+                <Fragment>
+                    <Button color="inherit" component={Link} to={"/login"}>Login</Button>
+                    <Button color="inherit" component={Link} to={"/register"}>Register</Button>
+                </Fragment>
+            )}
+        </Toolbar>
+    </AppBar>
+);
 
 const AppContainer = connect(
     (state, ownProps) => {
