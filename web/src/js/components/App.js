@@ -52,11 +52,11 @@ const TopNav = (props) => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton color="inherit" aria-label="Menu">
+            <IconButton color="inherit" aria-label="Menu" component={Link} to={"/listevents"}>
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="title" color="inherit">
-                    <img src="/img/cropped_logo.png" style={logoStyle} />
+            <img src="/img/cropped_logo.png" style={logoStyle}/>
                 </Typography>
                 <div className="flex" />
             {props.user.isAuthenticated ? (
