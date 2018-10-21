@@ -19,7 +19,6 @@ import { withRouter } from 'react-router';
 import Login from './Login';
 import Home from './Home';
 import Register from './Register';
-import Dashboard from './Dashboard';
 import InterestsEditor from './InterestsEditor';
 
 const logoStyle = {
@@ -34,11 +33,10 @@ class App extends Component {
               <div className="App">
                 <TopNav user={this.props.user} />
                 <Switch>
-                  <PrivateRoute path="/dashboard" component={Dashboard} user={this.props.user} />
                   <Route path="/login" component={Login}/>
                   <Route path="/register" component={Register}/>
                   <Route exact path="/" component={Home}/>
-                  <Route path="/interests" component={InterestsEditor}/>
+                  <PrivateRoute path="/interests" component={InterestsEditor} user={this.props.user} />
                 </Switch>
               </div>
           </Fragment>
