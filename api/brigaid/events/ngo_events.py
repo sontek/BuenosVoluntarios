@@ -4,6 +4,23 @@ from twilio.rest import Client
 from couchbase.n1ql import N1QLQuery
 
 
+def list_events(request):
+    cb = request.couch.open_bucket('events')
+    query_string = (
+        "SELECT meta(`events`).id, *  FROM `events`"
+    )
+    query = N1QLQuery(query_string)
+    cb = request.couch.open_bucket('events')
+    events = []
+    for row in cb.n1ql_query(query):
+        id = row['id']
+        event = row['events']
+        event['id'] = id
+        events.append(event)
+
+    return events
+
+
 def create_event(request):
     name = request.json.get("name", "")
     interests = request.json.get("interests", "")
