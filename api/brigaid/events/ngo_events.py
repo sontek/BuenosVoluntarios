@@ -4,8 +4,19 @@ from twilio.rest import Client
 from couchbase.n1ql import N1QLQuery
 
 
-def list_events(request):
+def delete_event(request):
     cb = request.couch.open_bucket('events')
+    cb.delete(request.json['id'])
+
+    events = get_events(request)
+
+    return {
+        "success": True,
+        "events": events
+    }
+
+
+def get_events(request):
     query_string = (
         "SELECT meta(`events`).id, *  FROM `events`"
     )
@@ -18,6 +29,11 @@ def list_events(request):
         event['id'] = id
         events.append(event)
 
+    return events
+
+
+def list_events(request):
+    events = get_events(request)
     return events
 
 

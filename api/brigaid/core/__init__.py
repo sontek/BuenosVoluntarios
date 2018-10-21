@@ -1,7 +1,7 @@
 import os
 from brigaid.auth.signup import sign_up, sign_in
 from brigaid.interests.user_interests import update_interests
-from brigaid.events.ngo_events import create_event, list_events
+from brigaid.events.ngo_events import create_event, list_events, delete_event
 from pyramid.config import Configurator
 from couchbase.cluster import Cluster
 from couchbase.cluster import PasswordAuthenticator
@@ -29,6 +29,9 @@ def main():
 
         config.add_route('listEvents', '/listEvents')
         config.add_view(list_events, route_name='listEvents', renderer='json')
+
+        config.add_route('deleteEvent', '/deleteEvent')
+        config.add_view(delete_event, route_name='deleteEvent', renderer='json')
 
         config.add_request_method(configure_cb, 'couch', reify=True)
         app = config.make_wsgi_app()

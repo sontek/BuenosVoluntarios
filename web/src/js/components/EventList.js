@@ -40,7 +40,11 @@ class EventList extends Component {
     }
 
     async deleteEvent(event) {
-        console.log('deleting');
+        makeRequest("/deleteEvent", {id: event.id}).then((result) => {
+            this.setState({
+                events: result.data.events,
+            });
+        });
     }
 
     render() {

@@ -91,6 +91,7 @@ class EventEditor extends React.Component {
         this.props.onSaveEvent(this.state.event).then((result) => {
             if (result.data.success) {
                 console.log("==== EVENT UPDATES SUCCESS");
+                this.props.history.push("/listevents");
             }
             else {
                 console.log("FAILED TO SAVE EVENT");
