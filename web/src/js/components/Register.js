@@ -49,8 +49,12 @@ class Register extends Component {
             this.state.is_ngo,
         ).then((result) => {
             if (result.data.success) {
-                this.props.loginSuccess(this.state.email, result.data.id);
+                this.props.loginSuccess({
+                    user: result.data.user,
+                    interests: {}
+                });
 
+                this.props.history.push("/listevents");
                 this.setState({
                     errors: []
                 });
@@ -164,8 +168,8 @@ const RegisterContainer = connect(
             onRegister: (email, password, phone_number, is_ngo) => {
                 return dispatch(attemptRegister({email, password, phone_number, is_ngo}));
             },
-            loginSuccess: (email_address, id) => {
-                return dispatch(loginSuccess({email_address, id}));
+            loginSuccess: (user) => {
+                return dispatch(loginSuccess(user));
             }
         }
     },

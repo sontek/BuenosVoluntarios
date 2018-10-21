@@ -23,11 +23,11 @@ export const attemptLogin = (email_address, password) => (
     return makeRequest("/signin", {email_address: email_address, password: password})
 };
 
-export const attemptRegister = (email_address, password, phone_number, is_ngo) => (
+export const attemptRegister = (user) => (
     dispatch,
     getState
 ) => {
-    return makeRequest("/signup", {email_address, password, phone_number, is_ngo})
+    return makeRequest("/signup", {...user})
 };
 
 export const updateInterests = (user) => (

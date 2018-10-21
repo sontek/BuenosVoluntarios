@@ -23,9 +23,13 @@ def sign_up(request):
         }
     )
 
+    user = cb.get(id).value
+    user['id'] = id
+    del user['password']
+
     return {
         "success": True,
-        "id": id,
+        "user": user,
     }
 
 
