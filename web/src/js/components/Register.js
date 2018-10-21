@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { requiredMessage, isEmailMessage, minStringLengthMessage } from "../form_utils";
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import { connect } from 'react-redux'
 import {attemptRegister, loginSuccess} from '../actions/users';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -37,6 +37,9 @@ class Register extends Component {
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value })
     }
+    handleRadioChange = event => {
+        this.setState({ is_ngo: event.target.value });
+    };
 
     onSubmit = () => {
         this.props.onRegister(
@@ -118,6 +121,21 @@ class Register extends Component {
                                     margin={"normal"}
                                 />
                             </div>
+                <div>
+                <FormControl component="fieldset">
+                <FormLabel component="legend">Register As</FormLabel>
+                <RadioGroup
+            aria-label="Register As"
+            name="is_ngo"
+            value={this.state.is_ngo}
+            onChange={this.handleRadioChange}
+                >
+                <FormControlLabel value="true" control={<Radio />} label="Organization" />
+                <FormControlLabel value="false" control={<Radio />} label="Individual" />
+                </RadioGroup>
+                </FormControl>
+                </div>
+
                             <Button type="submit" variant="contained" color="primary"
                                     disabled={user.isFetching}
                             >
