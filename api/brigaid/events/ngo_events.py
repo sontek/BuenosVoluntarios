@@ -69,13 +69,15 @@ def create_event(request):
     for row in cb.n1ql_query(query):
         user = row['users']
         if 'phone_number' in user and user['phone_number'] != "":
-            message = client.messages.create(
-                to="+1" + user['phone_number'],
-                from_="+14234558985",
-                body="New volunteer opportunity available! https://brigaid.ngrok.io/listevents"
-            )
-
-            print(message.sid)
+            try:
+                message = client.messages.create(
+                    to="+1" + user['phone_number'],
+                    from_="+14234558985",
+                    body="New volunteer opportunity available! https://brigaid.ngrok.io/listevents"
+                )
+                print(message.sid)
+            except Exception:
+                pass
 
     return {
         "success": True,
