@@ -30,9 +30,9 @@ export const attemptRegister = (email_address, password, phone_number, is_ngo) =
     return makeRequest("/signup", {email_address, password, phone_number, is_ngo})
 };
 
-export const updateInterests = (user_id, interests) => (
+export const updateInterests = (user) => (
     dispatch,
     getState
 ) => {
-    return makeRequest("/updateUser/", {user_id, interests})
+    return makeRequest("/updateUser/", user)
 };
