@@ -1,19 +1,15 @@
 import React, { Fragment } from 'react';
 import {
     FormControl,
-    FieldSet,
     FormLabel,
     FormGroup,
     FormControlLabel,
     Switch,
-    Paper,
     Card
 } from '@material-ui/core';
 import {withRouter} from "react-router";
 import Grid from '@material-ui/core/Grid';
 import Button from "@material-ui/core/Button/Button";
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
-import {ValidatorForm} from "react-material-ui-form-validator";
 import connect from "react-redux/es/connect/connect";
 import {updateInterests} from "../actions/users";
 

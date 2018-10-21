@@ -5,8 +5,6 @@ import App from './js/components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Router } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import cyan from '@material-ui/core/colors/cyan';
-import green from '@material-ui/core/colors/green';
 import {configureStore} from './js/redux_utils';
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'

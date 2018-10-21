@@ -1,11 +1,8 @@
 import React, { Fragment } from 'react';
 import {
     FormControl,
-    FieldSet,
     FormLabel,
     FormGroup,
-    FormControlLabel,
-    Switch,
     Paper,
     Card
 
