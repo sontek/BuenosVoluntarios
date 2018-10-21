@@ -11,6 +11,7 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import { Navigator, NativeModules } from 'react-native';
 
 import { COLOR, ThemeContext, getTheme } from 'react-native-material-ui';
+import FBLoginButton from './fb_button';
 
 // you can set your style right here, it'll be propagated to application
 const uiTheme = {
@@ -40,6 +41,7 @@ export default class App extends Component<Props> {
             <Text style={styles.welcome}>Welcome to React Native!</Text>
             <Text style={styles.instructions}>To get started, edit App.js</Text>
             <Text style={styles.instructions}>{instructions}</Text>
+            <FBLoginButton />
           </View>
         </ThemeContext.Provider>
     );
