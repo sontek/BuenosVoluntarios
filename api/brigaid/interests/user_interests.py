@@ -1,11 +1,13 @@
-from pyramid.settings import asbool
-import uuid
-from couchbase.n1ql import N1QLQuery
-
-
 def update_interests(request):
     cb = request.couch.open_bucket('users')
+    id = request.json['id']
+    print("user ID", id)
+    document = cb.get(id).value
+    document['interests'] = request.json['interests']
+    cb.upsert(id, document)
+    del document['password']
 
     return {
-        "success": False,
+        "success": True,
+        "user": document,
     }

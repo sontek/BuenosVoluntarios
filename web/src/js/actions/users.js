@@ -34,5 +34,5 @@ export const updateInterests = (user) => (
     dispatch,
     getState
 ) => {
-    return makeRequest("/updateUser/", user)
+    return makeRequest("/updateUser", user)
 };
