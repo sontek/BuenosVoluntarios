@@ -105,6 +105,8 @@ class EventEditor extends React.Component {
 
     render() {
         const {classes} = this.props;
+        console.log("==== STATE EVENT", this.state.event)
+
         return (
                 <Fragment>
                     <ValidatorForm onSubmit={this.onSubmit}>
@@ -112,7 +114,17 @@ class EventEditor extends React.Component {
                             <TextValidator
                                 name={"name"}
                                 label={"Event Name"}
-                                onChange={this.handleChangeEvent}
+                                onChange={(e) => {
+                                    console.log("CHANGE", e.target.value);
+                                    const newEvent = {
+                                        ...this.state.event,
+                                    };
+                                    newEvent[e.target.name] = e.target.value;
+
+                                    this.setState({
+                                        event: newEvent
+                                    });
+                                }}
                                 value={this.state.name}
                                 validators={["required"]}
                                 errorMessages={[requiredMessage]}
@@ -123,7 +135,17 @@ class EventEditor extends React.Component {
                             <TextValidator
                                 name={"date"}
                                 label={"Event Date"}
-                                onChange={this.handleChangeEvent}
+                                onChange={(e) => {
+                                    console.log("CHANGE", e.target.value);
+                                    const newEvent = {
+                                        ...this.state.event,
+                                    };
+                                    newEvent[e.target.name] = e.target.value;
+
+                                    this.setState({
+                                        event: newEvent
+                                    });
+                                }}
                                 value={this.state.date}
                                 validators={["required"]}
                                 errorMessages={[requiredMessage]}

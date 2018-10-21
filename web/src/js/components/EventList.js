@@ -13,6 +13,8 @@ import {
 
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Add as AddIcon } from '@material-ui/icons';
+import {makeRequest} from "../api";
+
 const cardStyle = {
     display: 'block',
     maxWidth: '600px',
@@ -26,11 +28,21 @@ const cardStyle = {
 class EventList extends Component {
     state = {
         loading: true,
-        events: [{name: 'cool', date: '10/10/2017'}, {name: 'Mine', date: '12/1/2019'}],
+        events: [],
+    };
+
+    componentWillMount() {
+        makeRequest("/listEvents").then((result) => {
+            this.setState({
+                events: result.data,
+            });
+        });
     }
+
     async deleteEvent(event) {
         console.log('deleting');
     }
+
     render() {
         const { classes } = this.props;
 
