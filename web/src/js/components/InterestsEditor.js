@@ -11,6 +11,11 @@ import {
 } from '@material-ui/core';
 import {withRouter} from "react-router";
 import Grid from '@material-ui/core/Grid';
+import Button from "@material-ui/core/Button/Button";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import {ValidatorForm} from "react-material-ui-form-validator";
+import connect from "react-redux/es/connect/connect";
+import {updateInterests} from "../actions/users";
 
 const cardStyle = {
     display: 'block',
@@ -23,21 +28,21 @@ const cardStyle = {
 
 class InterestsEditor extends React.Component {
     state = {
-        children: true,
-        seniors: true,
-        animals: true,
-        emergency: true,
-        homelessness: true,
-        medical: true,
-        women: true,
-        veterans: true,
-        environment: true,
-        labor: true,
-        technology: true,
-        funding: true,
-        legal: true,
-        creative: true,
-        teaching: true
+        children: false,
+        seniors: false,
+        animals: false,
+        emergency: false,
+        homelessness: false,
+        medical: false,
+        women: false,
+        veterans: false,
+        environment: false,
+        labor: false,
+        technology: false,
+        funding: false,
+        legal: false,
+        creative: false,
+        teaching: false
     };
 
     handleChange = name => event => {
@@ -60,6 +65,22 @@ class InterestsEditor extends React.Component {
                 />
             </Grid>
         )
+    };
+
+    onSubmit = () => {
+        this.props.onSaveInterests(this.user.id, {...this.state}).then((result) => {
+            if (result.data.success) {
+                console.log("==== USER UPDATES SUCCESS");
+            }
+            else {
+                console.log("FAILED TO SAVE INTERESTS");
+                this.setState({
+                    errors: [
+                        "Failed to save interests"
+                    ]
+                });
+            }
+        });
     };
 
     render() {
@@ -97,9 +118,27 @@ class InterestsEditor extends React.Component {
                         </FormGroup>
                     </FormControl>
                 </Card>
+                <Button type="submit" variant="contained" color="primary" onClick={this.onSubmit}>
+                    Save
+                </Button>
             </Fragment>
         )
     }
-}
+};
 
-export default withRouter(InterestsEditor);
+const InterestsContainer = connect(
+    (state, ownProps) => {
+        return {
+            user: state.users.user
+        };
+    },
+    (dispatch, ownProps) => {
+        return {
+            onSaveInterests: (user_id, interests) => {
+                return dispatch(updateInterests(user_id, interests));
+            },
+        }
+    },
+)(InterestsEditor);
+
+export default withRouter(InterestsContainer);

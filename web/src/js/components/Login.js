@@ -39,7 +39,7 @@ class Login extends Component {
     onSubmit = () => {
         this.props.onLogin(this.state.email, this.state.password).then((result) => {
             if (result.data.success) {
-                this.props.loginSuccess(this.state.email, result.data.id);
+                this.props.loginSuccess(result.data);
 
                 this.props.history.push('/interests');
             }
@@ -126,8 +126,8 @@ const LoginContainer = connect(
             onLogin: (email_address, password) => {
                 return dispatch(attemptLogin(email_address, password));
             },
-            loginSuccess: (email_address, id) => {
-                return dispatch(loginSuccess({email_address, id}));
+            loginSuccess: (data) => {
+                return dispatch(loginSuccess(data));
             }
         }
     },

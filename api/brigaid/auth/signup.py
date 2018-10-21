@@ -43,10 +43,13 @@ def sign_in(request):
     for row in cb.n1ql_query(query):
         id = row['id']
         user = row['users']
+        user['id'] = id
+
         if verify_password(user['password'], password):
+            del user['password']
             return {
                 "success": True,
-                "id": id,
+                "user": user
             }
 
     return {

@@ -29,8 +29,7 @@ const user = (state = initialState, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    id: action.payload.id,
-                    email_address: action.payload.email_address,
+                    ...action.payload.user,
                     isAuthenticated: true,
                     isFetching: false,
                     errors: [],
