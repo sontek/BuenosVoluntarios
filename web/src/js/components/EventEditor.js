@@ -73,7 +73,6 @@ class EventEditor extends React.Component {
         const {classes} = this.props;
         return (
                 <Fragment>
-                <Paper elevation={4}>
                 <ValidatorForm onSubmit={this.onSubmit}>
                 <div>
                 <TextValidator
@@ -88,6 +87,16 @@ class EventEditor extends React.Component {
                 </div>
                 <div>
                 <TextValidator
+            name={"date"}
+            label={"Event Date"}
+            onChange={this.handleChange}
+            value={this.state.date}
+            validators={["required"]}
+            errorMessages={[requiredMessage]}
+            margin="normal"
+                />
+                </div>               <div>
+                <TextValidator
             name={"description"}
             label={"Short Description"}
             onChange={this.handleChange}
@@ -97,9 +106,9 @@ class EventEditor extends React.Component {
             margin="normal"
                 />
                 </div>
+                <h2>Wanted Skills and Interests</h2>
                 <Interests renderSwitch={this.renderSwitch} />
                 </ValidatorForm>
-                </Paper>
                 </Fragment>
         )
     }
