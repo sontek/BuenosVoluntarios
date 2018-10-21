@@ -9,7 +9,17 @@ import {
     Paper,
     Card
 } from '@material-ui/core';
+import {withRouter} from "react-router";
+import Grid from '@material-ui/core/Grid';
 
+const cardStyle = {
+    display: 'block',
+    maxWidth: '600px',
+    margin: '0 auto',
+    marginBottom: '10px',
+    marginTop: '10px',
+    padding: '10px',
+};
 
 class InterestsEditor extends React.Component {
     state = {
@@ -37,16 +47,18 @@ class InterestsEditor extends React.Component {
     renderSwitch(k, i) {
         let checked = this.state[k];
         return (
-                <FormControlLabel
-            control={
-                    <Switch
-                checked={checked}
-                onChange={this.handleChange(k)}
-                value={k}
-                    />
-            }
-            label={k.toUpperCase()}
+            <Grid item>
+                <FormControlLabel key={i}
+                    control={
+                        <Switch
+                            checked={checked}
+                            onChange={this.handleChange(k)}
+                            value={k}
+                        />
+                    }
+                    label={k.toUpperCase()}
                 />
+            </Grid>
         )
     };
 
@@ -54,44 +66,40 @@ class InterestsEditor extends React.Component {
         const {classes} = this.props;
         return (
             <Fragment>
-                <Card >
-            <FormControl component="fieldset">
-            <FormLabel component="legend">Cause Areas of Interest</FormLabel>    
-                <FormGroup row>
-                {['children', 'animals', 'seniors'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
-                })}
-            </FormGroup>
-                <FormGroup row>
-                {['women', 'emergency', 'veterans'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
-                })}
-            </FormGroup>
-                <FormGroup row>
-                {['homelessness', 'medical', 'environment'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
-                })}
-            </FormGroup>
-                </FormControl>
+                <Card style={cardStyle}>
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Cause Areas of Interest</FormLabel>
+                            <FormGroup row>
+                                <Grid container>
+                                    {[
+                                        'children', 'animals', 'seniors',
+                                        'women', 'emergency', 'veterans',
+                                        'homelessness', 'medical', 'environment'
+                                    ].map( (interest, i) => {
+                                        return this.renderSwitch(interest, i)
+                                    })}
+                                </Grid>
+                            </FormGroup>
+                    </FormControl>
                 </Card>
-                <Card>
-                <FormControl component="fieldset">
-                <FormLabel component="legend">Skills and Contributions</FormLabel>
-                <FormGroup row>
-                {['labor', 'technology', 'funding'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
-                })}
-            </FormGroup>
-                <FormGroup row>
-                {['creative', 'legal', 'teaching'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
-                })}
-            </FormGroup>
-                </FormControl>
+                <Card style={cardStyle}>
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Skills and Contributions</FormLabel>
+                        <FormGroup row>
+                            {['labor', 'technology', 'funding'].map( (interest, i) => {
+                                return this.renderSwitch(interest, i)
+                            })}
+                        </FormGroup>
+                        <FormGroup row>
+                            {['creative', 'legal', 'teaching'].map( (interest, i) => {
+                                return this.renderSwitch(interest, i)
+                            })}
+                        </FormGroup>
+                    </FormControl>
                 </Card>
-</Fragment>
+            </Fragment>
         )
     }
 }
 
-export default InterestsEditor;
+export default withRouter(InterestsEditor);

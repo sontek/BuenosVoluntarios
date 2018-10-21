@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { attemptLogin, loginSuccess } from '../actions/users';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '../materials/Snackbar';
+import {withRouter} from "react-router";
 
 const styles = theme => ({
     wrapper: {
@@ -40,9 +41,7 @@ class Login extends Component {
             if (result.data.success) {
                 this.props.loginSuccess(this.state.email, result.data.id);
 
-                this.setState({
-                    errors: []
-                });
+                this.props.history.push('/interests');
             }
             else {
                 this.setState({
@@ -134,4 +133,4 @@ const LoginContainer = connect(
     },
 )(Login);
 
-export default withStyles(styles)(LoginContainer);
+export default withRouter(withStyles(styles)(LoginContainer));

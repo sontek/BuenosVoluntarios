@@ -12,7 +12,6 @@ export const REGISTER_FAILED = 'REGISTER_FAILED';
 export const loginStart = createAction(LOGIN_START);
 export const loginSuccess = createAction(LOGIN_SUCCESS);
 export const loginFailed = createAction(LOGIN_FAILED);
-export const attemptRegister = createAction(ATTEMPT_REGISTER);
 export const registerStart = createAction(REGISTER_START);
 export const registerSuccess = createAction(REGISTER_SUCCESS);
 export const registerFailed = createAction(REGISTER_FAILED);
@@ -22,4 +21,11 @@ export const attemptLogin = (email_address, password) => (
     getState
 ) => {
     return makeRequest("/signin", {email_address: email_address, password: password})
+};
+
+export const attemptRegister = (email_address, password, phone_number, is_ngo) => (
+    dispatch,
+    getState
+) => {
+    return makeRequest("/signup", {email_address, password, phone_number, is_ngo})
 };

@@ -5,9 +5,10 @@ import { requiredMessage, isEmailMessage, minStringLengthMessage } from "../form
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
-import { attemptRegister } from '../actions/users';
+import {attemptRegister, loginSuccess} from '../actions/users';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '../materials/Snackbar';
+import {withRouter} from "react-router";
 
 const styles = theme => ({
     wrapper: {
@@ -25,10 +26,11 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name_first: '',
-            name_last: '',
+            phone_number: '',
+            is_ngo: false,
             email: '',
-            password: ''
+            password: '',
+            errors: [],
         }
     }
 
@@ -38,15 +40,30 @@ class Register extends Component {
 
     onSubmit = () => {
         this.props.onRegister(
-            this.state.name_first,
-            this.state.name_last,
             this.state.email,
-            this.state.password
-        );
+            this.state.password,
+            this.state.phone_number,
+            this.state.is_ngo,
+        ).then((result) => {
+            if (result.data.success) {
+                this.props.loginSuccess(this.state.email, result.data.id);
+
+                this.setState({
+                    errors: []
+                });
+            }
+            else {
+                this.setState({
+                    errors: [
+                        "Failed to register"
+                    ]
+                });
+            }
+        });
     };
 
     renderErrors = () => {
-        return this.props.user.errors.map((error, index) => {
+        return this.state.errors.map((error, index) => {
             return (
                 <Snackbar
                     key={`error-${index}`}
@@ -69,28 +86,6 @@ class Register extends Component {
                         <ValidatorForm onSubmit={this.onSubmit}>
                             <div>
                                 <TextValidator
-                                    name={"name_first"}
-                                    label={"First Name"}
-                                    onChange={(e) => this.handleChange(e)}
-                                    value={this.state.name_first}
-                                    validators={["required"]}
-                                    errorMessages={[requiredMessage]}
-                                    margin={"normal"}
-                                />
-                            </div>
-                            <div>
-                                <TextValidator
-                                    name={"name_last"}
-                                    label={"Last Name"}
-                                    onChange={(e) => this.handleChange(e)}
-                                    value={this.state.name_last}
-                                    validators={["required"]}
-                                    errorMessages={[requiredMessage]}
-                                    margin={"normal"}
-                                />
-                            </div>
-                            <div>
-                                <TextValidator
                                     name={"email"}
                                     label={"Email"}
                                     onChange={(e) => this.handleChange(e)}
@@ -110,6 +105,17 @@ class Register extends Component {
                                     validators={["required", "minStringLength:6"]}
                                     errorMessages={[requiredMessage, minStringLengthMessage(6)]}
                                     margin="normal"
+                                />
+                            </div>
+                            <div>
+                                <TextValidator
+                                    name={"phone_number"}
+                                    label={"Phone Number"}
+                                    onChange={(e) => this.handleChange(e)}
+                                    value={this.state.phone_number}
+                                    validators={["required"]}
+                                    errorMessages={[requiredMessage]}
+                                    margin={"normal"}
                                 />
                             </div>
                             <Button type="submit" variant="contained" color="primary"
@@ -137,11 +143,14 @@ const RegisterContainer = connect(
     },
     (dispatch, ownProps) => {
         return {
-            onRegister: (name_first, name_last, email, password) => {
-                dispatch(attemptRegister({name_first, name_last, email, password}));
+            onRegister: (email, password, phone_number, is_ngo) => {
+                return dispatch(attemptRegister({email, password, phone_number, is_ngo}));
+            },
+            loginSuccess: (email_address, id) => {
+                return dispatch(loginSuccess({email_address, id}));
             }
         }
     },
 )(Register);
 
-export default withStyles(styles)(RegisterContainer);
+export default withRouter(withStyles(styles)(RegisterContainer));
