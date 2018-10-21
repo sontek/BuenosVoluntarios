@@ -22,6 +22,10 @@ import Register from './Register';
 import Dashboard from './Dashboard';
 import InterestsEditor from './InterestsEditor';
 
+const logoStyle = {
+    maxWidth: "150px",
+};
+
 class App extends Component {
   render() {
       return (
@@ -49,7 +53,7 @@ const TopNav = (user) => (
                 <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit">
-                Brigaid
+                <img src="/img/cropped_logo.png" style={logoStyle} />
             </Typography>
             <div className="flex" />
             {user.is_authenticated ? <IconButton><AccountCircle /></IconButton> : (
