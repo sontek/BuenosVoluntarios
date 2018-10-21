@@ -54,17 +54,16 @@ class EventList extends Component {
                 <Card style={cardStyle}>
                 {!this.state.events.length ? <h2>No Events Scheduled</h2> : (
                         <List>
-                        {this.state.events.map(event => (
-                                <ListItem>
-                                <ListItemText primary={event.name} secondary={event.date} />
-                                <ListItemSecondaryAction>
-                                <IconButton onClick={() => this.deleteEvent(event)} color="inherit">
-                                <DeleteIcon />
-                                </IconButton>
-                                                  </ListItemSecondaryAction>
+                        {this.state.events.map((event) => (
+                                <ListItem key={event.id}>
+                                    <ListItemText primary={event.name} secondary={event.date} />
+                                    <ListItemSecondaryAction>
+                                        <IconButton onClick={() => this.deleteEvent(event)} color="inherit">
+                                        <DeleteIcon />
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
                                 </ListItem>
-                        )
-                                              )}
+                        ))}
                     </List>
                 ) }
                 </Card>

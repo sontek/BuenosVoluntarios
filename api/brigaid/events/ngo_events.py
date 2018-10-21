@@ -72,7 +72,7 @@ def create_event(request):
             message = client.messages.create(
                 to="+1" + user['phone_number'],
                 from_="+14234558985",
-                body="New volunteer opportunity available! https://brigaid.ngrok.io/events"
+                body="New volunteer opportunity available! https://brigaid.ngrok.io/listevents"
             )
 
             print(message.sid)
