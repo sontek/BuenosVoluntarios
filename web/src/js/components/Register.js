@@ -153,4 +153,4 @@ const RegisterContainer = connect(
     },
 )(Register);
 
-export default withRouter(withStyles(styles)(RegisterContainer));
+export default withStyles(styles)(withRouter(RegisterContainer));

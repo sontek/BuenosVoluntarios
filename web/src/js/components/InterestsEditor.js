@@ -47,8 +47,8 @@ class InterestsEditor extends React.Component {
     renderSwitch(k, i) {
         let checked = this.state[k];
         return (
-            <Grid item>
-                <FormControlLabel key={i}
+            <Grid item key={i}>
+                <FormControlLabel
                     control={
                         <Switch
                             checked={checked}

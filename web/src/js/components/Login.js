@@ -133,4 +133,4 @@ const LoginContainer = connect(
     },
 )(Login);
 
-export default withRouter(withStyles(styles)(LoginContainer));
+export default withStyles(styles)(withRouter(LoginContainer));
