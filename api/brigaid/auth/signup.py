@@ -32,7 +32,8 @@ def sign_up(request):
 def sign_in(request):
     email = request.json.get("email_address", "")
     password = request.json.get("password", "")
-
+    print("email", email)
+    print("password", password)
     query_string = (
         "SELECT meta(`users`).id, *  FROM `users` WHERE email_address=$email_address"
     )

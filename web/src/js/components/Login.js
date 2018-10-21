@@ -5,7 +5,7 @@ import { requiredMessage, isEmailMessage} from "../form_utils";
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
-import { attemptLogin } from '../actions/users';
+import { attemptLogin, loginSuccess } from '../actions/users';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '../materials/Snackbar';
 
@@ -26,7 +26,8 @@ class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errors: [],
         }
     }
 
@@ -35,11 +36,26 @@ class Login extends Component {
     }
 
     onSubmit = () => {
-        this.props.onLogin(this.state.email, this.state.password);
+        this.props.onLogin(this.state.email, this.state.password).then((result) => {
+            if (result.data.success) {
+                this.props.loginSuccess(this.state.email, result.data.id);
+
+                this.setState({
+                    errors: []
+                });
+            }
+            else {
+                this.setState({
+                    errors: [
+                        "Failed to login"
+                    ]
+                });
+            }
+        });
     };
 
     renderErrors = () => {
-        return this.props.user.errors.map((error, index) => {
+        return this.state.errors.map((error, index) => {
             return (
                 <Snackbar
                     key={`error-${index}`}
@@ -109,7 +125,10 @@ const LoginContainer = connect(
     (dispatch, ownProps) => {
         return {
             onLogin: (email_address, password) => {
-                dispatch(attemptLogin({email_address, password}));
+                return dispatch(attemptLogin(email_address, password));
+            },
+            loginSuccess: (email_address, id) => {
+                return dispatch(loginSuccess({email_address, id}));
             }
         }
     },
