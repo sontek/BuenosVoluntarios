@@ -1,51 +1,62 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
 
 import '../../css/App.css';
 import {Route, Link, Switch} from "react-router-dom";
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Menu as MenuIcon, AccountCircle } from '@material-ui/icons';
+import {
+    CssBaseline,
+    withStyles,
+    AppBar,
+    Toolbar,
+    IconButton,
+    Typography,
+    Button,
+} from '@material-ui/core';
+import PrivateRoute from '../materials/PrivateRoute';
+import { withRouter } from 'react-router';
+
 import Login from './Login';
 import Home from './Home';
 import Register from './Register';
 import Dashboard from './Dashboard';
-import PrivateRoute from '../materials/PrivateRoute';
-import { withRouter } from 'react-router'
 
 class App extends Component {
   render() {
       return (
+              <CssBaseline />
           <div className="App">
-              <AppBar position="static">
-                  <Toolbar>
-                      <IconButton color="inherit" aria-label="Menu">
-                          <MenuIcon />
-                      </IconButton>
-                      <Typography variant="title" color="inherit">
-                          Brigaid
-                      </Typography>
-                      <Button color="inherit" component={Link} to={"/login"}>Login</Button>
-                      <Button color="inherit" component={Link} to={"/register"}>Register</Button>
-                  </Toolbar>
-              </AppBar>
-              <div>
-                  <div>
-                      <Switch>
-                          <PrivateRoute path="/dashboard" component={Dashboard} user={this.props.user} />
-                          <Route path="/login" component={Login}/>
-                          <Route path="/register" component={Register}/>
-                          <Route path="/" component={Home}/>
-                      </Switch>
-                  </div>
-              </div>
+            <TopNav />
+            <Switch>
+              <PrivateRoute path="/dashboard" component={Dashboard} user={this.props.user} />
+              <Route path="/login" component={Login}/>
+              <Route path="/register" component={Register}/>
+              <Route path="/" component={Home}/>
+            </Switch>
           </div>
     );
   }
 }
+
+const TopNav = (user) => (
+      <AppBar position="static">
+      <Toolbar>
+      <IconButton color="inherit" aria-label="Menu">
+      <MenuIcon />
+      </IconButton>
+      <Typography variant="title" color="inherit">
+    Brigaid
+</Typography>
+        <div className="flex" />
+        {!user ? <IconButton><AccountCircle /></IconButton> : (
+            <Fragment>
+    <Button color="inherit" component={Link} to={"/login"}>Login</Button>
+                <Button color="inherit" component={Link} to={"/register"}>Register</Button>
+</Fragment>
+        )}
+    </Toolbar>
+        </AppBar>
+)
 
 const AppContainer = connect(
     (state, ownProps) => {
