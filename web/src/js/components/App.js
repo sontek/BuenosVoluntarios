@@ -20,6 +20,7 @@ import Login from './Login';
 import Home from './Home';
 import Register from './Register';
 import InterestsEditor from './InterestsEditor';
+import EventEditor from './EventEditor';
 
 const logoStyle = {
     maxWidth: "150px",
@@ -37,6 +38,7 @@ class App extends Component {
                   <Route path="/register" component={Register}/>
                   <Route exact path="/" component={Home}/>
                   <PrivateRoute path="/interests" component={InterestsEditor} user={this.props.user} />
+                  <Route path="/events" component={EventEditor} user={this.props.user} />
                 </Switch>
               </div>
           </Fragment>

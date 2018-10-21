@@ -29,26 +29,6 @@ const cardStyle = {
 };
 
 class Interests extends React.Component {
-    renderSwitch(k, i) {
-        let checked = this.state[k];
-        return (
-                <Grid item key={i}>
-                <FormControlLabel
-            control={
-                    <Switch
-                checked={checked}
-                onChange={this.props.handleChange(k)}
-                value={k}
-                    />
-                                        
-            }
-            label={k.toUpperCase()}
-                />
-                </Grid>
-        )
-            
-    };
-
     render() {
         const {classes} = this.props;
         return (
@@ -64,7 +44,7 @@ class Interests extends React.Component {
                     'homelessness', 'medical', 'environment'
                                                         
                 ].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
+                    return this.props.renderSwitch(interest, i)
                                                         
                 })}
             </Grid>
@@ -76,13 +56,13 @@ class Interests extends React.Component {
                 <FormLabel component="legend">Skills and Contributions</FormLabel>
                 <FormGroup row>
                 {['labor', 'technology', 'funding'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
+                    return this.props.renderSwitch(interest, i)
                                                 
                 })}
             </FormGroup>
                 <FormGroup row>
                 {['creative', 'legal', 'teaching'].map( (interest, i) => {
-                    return this.renderSwitch(interest, i)
+                    return this.props.renderSwitch(interest, i)
                                                 
                 })}
             </FormGroup>
